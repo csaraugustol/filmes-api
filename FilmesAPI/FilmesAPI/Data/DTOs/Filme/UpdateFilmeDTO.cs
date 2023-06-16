@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FilmesAPI.Data.DTOs;
+namespace FilmesAPI.Data.DTOs.Filme;
 
-public class CreateFilmeDTO
+public class UpdateCinemaDTO
 {
     [StringLength(100, ErrorMessage = "Tamanho máximo de 100 caracteres.")]
     [Required(ErrorMessage = "O título é obrigatório.")]

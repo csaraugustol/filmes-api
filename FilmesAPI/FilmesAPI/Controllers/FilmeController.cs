@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using FilmesAPI.Data;
-using FilmesAPI.Data.DTOs;
+using FilmesAPI.Data.Contextos;
+using FilmesAPI.Data.DTOs.Filme;
 using FilmesAPI.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -57,7 +57,7 @@ public class FilmeController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult AtualizarFilme(int id, [FromBody] UpdateFilmeDTO updateFilmeDTO )
+    public IActionResult AtualizarFilme(int id, [FromBody] UpdateCinemaDTO updateFilmeDTO )
     {
         var filme = _context.Filmes.FirstOrDefault(f => f.Id == id);
 
@@ -90,13 +90,13 @@ public class FilmeController : ControllerBase
 
     [HttpPatch("{id}")]
     public IActionResult AtualizaFilmeParcial(int id,
-            JsonPatchDocument<UpdateFilmeDTO> patch)
+            JsonPatchDocument<UpdateCinemaDTO> patch)
     {
         var filme = _context.Filmes.FirstOrDefault(
             filme => filme.Id == id);
         if (filme == null) return NotFound();
 
-        var filmeParaAtualizar = _mapper.Map<UpdateFilmeDTO>(filme);
+        var filmeParaAtualizar = _mapper.Map<UpdateCinemaDTO>(filme);
 
         patch.ApplyTo(filmeParaAtualizar, ModelState);
 

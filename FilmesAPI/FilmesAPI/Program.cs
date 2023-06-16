@@ -1,5 +1,4 @@
-using FilmesAPI.Data;
-using FilmesAPI.Data;
+using FilmesAPI.Data.Contextos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
