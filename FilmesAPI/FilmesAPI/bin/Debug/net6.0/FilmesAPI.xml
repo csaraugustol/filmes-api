@@ -4,7 +4,7 @@
         <name>FilmesAPI</name>
     </assembly>
     <members>
-        <member name="M:FilmesAPI.Controllers.FilmeController.AdicionaFilme(FilmesAPI.Data.DTOs.CreateFilmeDTO)">
+        <member name="M:FilmesAPI.Controllers.FilmeController.AdicionaFilme(FilmesAPI.Data.DTOs.Filme.CreateFilmeDTO)">
             <summary>
             Adiciona um filme ao banco de dados
             </summary>
@@ -12,16 +12,16 @@
             <returns>IActionResult</returns>
             <response code="201">Caso inserção seja feita com sucesso</response>
         </member>
-        <member name="T:FilmesAPI.Migrations.CriandoTabelaFilme">
+        <member name="T:FilmesAPI.Migrations.Inicial">
             <inheritdoc />
         </member>
-        <member name="M:FilmesAPI.Migrations.CriandoTabelaFilme.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:FilmesAPI.Migrations.Inicial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:FilmesAPI.Migrations.CriandoTabelaFilme.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:FilmesAPI.Migrations.Inicial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:FilmesAPI.Migrations.CriandoTabelaFilme.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:FilmesAPI.Migrations.Inicial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

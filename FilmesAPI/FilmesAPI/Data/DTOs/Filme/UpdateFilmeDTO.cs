@@ -2,7 +2,7 @@
 
 namespace FilmesAPI.Data.DTOs.Filme;
 
-public class UpdateCinemaDTO
+public class UpdateFilmeDTO
 {
     [StringLength(100, ErrorMessage = "Tamanho máximo de 100 caracteres.")]
     [Required(ErrorMessage = "O título é obrigatório.")]

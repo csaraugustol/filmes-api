@@ -57,7 +57,7 @@ public class FilmeController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult AtualizarFilme(int id, [FromBody] UpdateCinemaDTO updateFilmeDTO )
+    public IActionResult AtualizarFilme(int id, [FromBody] UpdateFilmeDTO updateFilmeDTO )
     {
         var filme = _context.Filmes.FirstOrDefault(f => f.Id == id);
 
@@ -90,13 +90,13 @@ public class FilmeController : ControllerBase
 
     [HttpPatch("{id}")]
     public IActionResult AtualizaFilmeParcial(int id,
-            JsonPatchDocument<UpdateCinemaDTO> patch)
+            JsonPatchDocument<UpdateFilmeDTO> patch)
     {
         var filme = _context.Filmes.FirstOrDefault(
             filme => filme.Id == id);
         if (filme == null) return NotFound();
 
-        var filmeParaAtualizar = _mapper.Map<UpdateCinemaDTO>(filme);
+        var filmeParaAtualizar = _mapper.Map<UpdateFilmeDTO>(filme);
 
         patch.ApplyTo(filmeParaAtualizar, ModelState);
 
