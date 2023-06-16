@@ -20,7 +20,14 @@ public class FilmeController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Adiciona um filme ao banco de dados
+    /// </summary>
+    /// <param name="filmeDto">Objeto com os campos necessários para criação de um filme</param>
+    /// <returns>IActionResult</returns>
+    /// <response code="201">Caso inserção seja feita com sucesso</response>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult AdicionaFilme([FromBody] CreateFilmeDTO createFilmeDTO)
     {
         Filme filme = _mapper.Map<Filme>(createFilmeDTO);
@@ -32,9 +39,9 @@ public class FilmeController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Filme> Filmes([FromQuery] int skip = 0, [FromQuery] int take = 50)
+    public IEnumerable<ReadFilmeDTO> Filmes([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
-        return _context.Filmes.Skip(skip).Take(take);
+        return _mapper.Map<List<ReadFilmeDTO>>(_context.Filmes.Skip(skip).Take(take));
     }
 
     [HttpGet("{id}")]
@@ -43,7 +50,10 @@ public class FilmeController : ControllerBase
         var filme = _context.Filmes.FirstOrDefault(f => f.Id == id);
 
         if (filme == null) return NotFound();
-        return Ok(filme);
+
+        var filmeDTO = _mapper.Map<ReadFilmeDTO>(filme);
+
+        return Ok(filmeDTO);
     }
 
     [HttpPut("{id}")]
@@ -79,12 +89,13 @@ public class FilmeController : ControllerBase
     //}
 
     [HttpPatch("{id}")]
-    public IActionResult AtualizaFilmeParcial(int id, JsonPatchDocument<UpdateFilmeDTO> patch)
+    public IActionResult AtualizaFilmeParcial(int id,
+            JsonPatchDocument<UpdateFilmeDTO> patch)
     {
-        var filme = _context.Filmes.FirstOrDefault(f => f.Id == id);
-
+        var filme = _context.Filmes.FirstOrDefault(
+            filme => filme.Id == id);
         if (filme == null) return NotFound();
-        
+
         var filmeParaAtualizar = _mapper.Map<UpdateFilmeDTO>(filme);
 
         patch.ApplyTo(filmeParaAtualizar, ModelState);
@@ -94,6 +105,19 @@ public class FilmeController : ControllerBase
             return ValidationProblem(ModelState);
         }
         _mapper.Map(filmeParaAtualizar, filme);
+        _context.SaveChanges();
+        return NoContent();
+    }
+
+
+    [HttpDelete("{id}")]
+    public IActionResult DeletarFilme(int id)
+    {
+        var filme = _context.Filmes.FirstOrDefault(f => f.Id == id);
+
+        if (filme == null) return NotFound();
+
+        _context.Remove(filme);
         _context.SaveChanges();
         return NoContent();
     }
