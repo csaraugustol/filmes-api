@@ -20,12 +20,12 @@ public class FilmeController : ControllerBase
         _mapper = mapper;
     }
 
-    /// <summary>
-    /// Adiciona um filme ao banco de dados
-    /// </summary>
-    /// <param name="filmeDto">Objeto com os campos necessários para criação de um filme</param>
-    /// <returns>IActionResult</returns>
-    /// <response code="201">Caso inserção seja feita com sucesso</response>
+    ///// <summary>
+    ///// Adiciona um filme ao banco de dados
+    ///// </summary>
+    ///// <param name="filmeDto">Objeto com os campos necessários para criação de um filme</param>
+    ///// <returns>IActionResult</returns>
+    ///// <response code="201">Caso inserção seja feita com sucesso</response>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult AdicionaFilme([FromBody] CreateFilmeDTO createFilmeDTO)
@@ -39,9 +39,14 @@ public class FilmeController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<ReadFilmeDTO> Filmes([FromQuery] int skip = 0, [FromQuery] int take = 50)
+    public IEnumerable<ReadFilmeDTO> Filmes([FromQuery] int skip = 0, [FromQuery] int take = 50, [FromQuery] string? nomeCinema = null)
     {
-        return _mapper.Map<List<ReadFilmeDTO>>(_context.Filmes.Skip(skip).Take(take));
+        if(nomeCinema == null)
+        {
+            return _mapper.Map<List<ReadFilmeDTO>>(_context.Filmes.Skip(skip).Take(take));
+        }
+
+        return _mapper.Map<List<ReadFilmeDTO>>(_context.Filmes.Skip(skip).Take(take).Where(filme => filme.Sessoes.Any(sessao => sessao.Cinema.Nome == nomeCinema))) ;
     }
 
     [HttpGet("{id}")]
